@@ -7,6 +7,7 @@ require "language_pack/cache"
 require "language_pack/helpers/bundler_cache"
 require "language_pack/helpers/node_modules_cache"
 require "language_pack/helpers/webpacks_cache"
+require "language_pack/helpers/webpacker_cache"
 require "language_pack/metadata"
 require "language_pack/fetcher"
 require "language_pack/instrument"
@@ -40,6 +41,7 @@ class LanguagePack::Base
       @metadata           = LanguagePack::Metadata.new(@cache)
       @bundler_cache      = LanguagePack::BundlerCache.new(@cache, @stack)
       @webpacks_cache     = LanguagePack::WebpacksCache.new(@cache, @stack)
+      @webpacker_cache    = LanguagePack::WebpackerCache.new(@cache, @stack)
       @node_modules_cache = LanguagePack::NodeModulesCache.new(@cache, @stack)
       @id                 = Digest::SHA1.hexdigest("#{Time.now.to_f}-#{rand(1000000)}")[0..10]
       @fetchers           = {:buildpack => LanguagePack::Fetcher.new(VENDOR_URL) }
