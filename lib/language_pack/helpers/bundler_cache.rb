@@ -1,5 +1,3 @@
-require "pathname"
-require "fileutils"
 require "language_pack/cache"
 require_relative "./base_cache"
 

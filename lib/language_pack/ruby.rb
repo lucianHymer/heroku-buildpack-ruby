@@ -963,6 +963,8 @@ params = CGI.parse(uri.query || "")
       precompile.invoke(env: rake_env)
       if precompile.success?
         puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
+        @webpacks_cache.store
+        @node_modules_cache.store
       else
         precompile_fail(precompile.output)
       end
@@ -1014,11 +1016,17 @@ params = CGI.parse(uri.query || "")
       stack_change  = old_stack != @stack
       convert_stack = @bundler_cache.old?
       @bundler_cache.convert_stack(stack_change) if convert_stack
+      @webpacks_cache.convert_stack(stack_change) if convert_stack
+      @node_modules_cache.convert_stack(stack_change) if convert_stack
       if !new_app? && stack_change
         puts "Purging Cache. Changing stack from #{old_stack} to #{@stack}"
         purge_bundler_cache(old_stack)
+        purge_webpacks_cache(old_stack)
+        purge_node_modules_cache(old_stack)
       elsif !new_app? && !convert_stack
         @bundler_cache.load
+        @webpacks_cache.load
+        @node_modules_cache.load
       end
 
       # fix bug from v37 deploy
@@ -1086,11 +1094,14 @@ params = CGI.parse(uri.query || "")
     end
   end
 
-  def purge_bundler_cache(stack = nil)
-    instrument "ruby.purge_bundler_cache" do
-      @bundler_cache.clear(stack)
-      # need to reinstall language pack gems
-      install_bundler_in_app
+  %w[bundler webpacks node_modules].each{|cache_name|
+    define_method("purge_#{cache_name}_cache".to_sym) do |stack=nil|
+      instrument "ruby.purge_bundler_cache" do
+        instance_variable_get("@#{cache_name}_cache".to_sym).clear(stack)
+        # need to reinstall language pack gems
+        install_bundler_in_app
+      end
     end
-  end
+  }
+
 end
