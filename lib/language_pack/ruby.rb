@@ -115,6 +115,7 @@ WARNING
 
   def cleanup
     @webpacks_cache.store
+    @webpacker_cache.store
     @node_modules_cache.store
   end
 
@@ -1016,6 +1017,7 @@ params = CGI.parse(uri.query || "")
       stack_change  = old_stack != @stack
       convert_stack = @bundler_cache.old?
       @bundler_cache.convert_stack(stack_change) if convert_stack
+      @webpacker_cache.convert_stack(stack_change) if convert_stack
       @webpacks_cache.convert_stack(stack_change) if convert_stack
       @node_modules_cache.convert_stack(stack_change) if convert_stack
       if !new_app? && stack_change
@@ -1027,6 +1029,7 @@ params = CGI.parse(uri.query || "")
         puts "HERE!!!"
         @bundler_cache.load
         @webpacks_cache.load
+        @webpacker_cache.load
         @node_modules_cache.load
       end
 
