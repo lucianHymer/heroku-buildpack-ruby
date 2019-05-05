@@ -43,6 +43,10 @@ class LanguagePack::Base
     end
   end
 
+  def cache_node_and_wepback_build?
+    true
+  end
+
   def instrument(*args, &block)
     self.class.instrument(*args, &block)
   end
