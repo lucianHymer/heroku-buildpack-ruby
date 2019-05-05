@@ -1024,6 +1024,7 @@ params = CGI.parse(uri.query || "")
         purge_webpacks_cache(old_stack)
         purge_node_modules_cache(old_stack)
       elsif !new_app? && !convert_stack
+        puts "HERE!!!"
         @bundler_cache.load
         @webpacks_cache.load
         @node_modules_cache.load
