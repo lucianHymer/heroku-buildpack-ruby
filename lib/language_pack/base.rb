@@ -31,13 +31,9 @@ class LanguagePack::Base
   # @param [String] the path of the cache dir this is nil during detect and release
   def initialize(build_path, cache_path=nil)
      self.class.instrument "base.initialize" do
-      @build_path    = build_path
-      @stack         = ENV.fetch("STACK")
-      @cache         = LanguagePack::Cache.new(cache_path) if cache_path
-      puts "TEST"
-      puts Dir.pwd
-      puts cache_path
-      puts @stack
+      @build_path         = build_path
+      @stack              = ENV.fetch("STACK")
+      @cache              = LanguagePack::Cache.new(cache_path) if cache_path
       @metadata           = LanguagePack::Metadata.new(@cache)
       @bundler_cache      = LanguagePack::BundlerCache.new(@cache, @stack)
       @webpacks_cache     = LanguagePack::WebpacksCache.new(@cache, @stack)
