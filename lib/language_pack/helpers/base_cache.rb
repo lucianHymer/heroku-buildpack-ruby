@@ -7,7 +7,7 @@ require "language_pack/cache"
 module BaseCache
   CACHE_NAME = nil # DEFINE
   CACHE_PATH = nil # DEFINE
-  DIR_SYM =  "#{self.class::CACHE_NAME}_dir".to_sym 
+  DIR_SYM =  "#{self::CACHE_NAME}_dir".to_sym 
 
   # @param [LanguagePack::Cache] cache object
   # @param [String] stack buildpack is running on
