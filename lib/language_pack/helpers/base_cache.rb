@@ -47,11 +47,13 @@ module BaseCache
 
   # writes cache contents to cache store
   def store
+    puts "Storing #{@stack_dir} #{@cache_dir}"
     @cache.store(@cache_dir, @stack_dir)
   end
 
   # loads cache contents from the cache store
   def load
+    puts "Loading #{@stack_dir} #{@cache_dir}"
     @cache.load(@stack_dir, @cache_dir)
   end
 end
