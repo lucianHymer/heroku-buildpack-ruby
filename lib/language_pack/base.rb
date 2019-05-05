@@ -34,6 +34,7 @@ class LanguagePack::Base
       @stack         = ENV.fetch("STACK")
       @cache         = LanguagePack::Cache.new(cache_path) if cache_path
       puts "TEST"
+      puts Dir.pwd
       puts cache_path
       puts @stack
       @metadata           = LanguagePack::Metadata.new(@cache)
