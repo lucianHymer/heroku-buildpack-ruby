@@ -33,6 +33,7 @@ class LanguagePack::Base
       @cache         = LanguagePack::Cache.new(cache_path) if cache_path
       puts "TEST"
       puts cache_path
+      puts @stack
       @metadata      = LanguagePack::Metadata.new(@cache)
       @bundler_cache = LanguagePack::BundlerCache.new(@cache, @stack)
       @id            = Digest::SHA1.hexdigest("#{Time.now.to_f}-#{rand(1000000)}")[0..10]
