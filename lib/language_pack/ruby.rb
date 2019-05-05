@@ -114,6 +114,8 @@ WARNING
   end
 
   def cleanup
+    @webpacks_cache.store
+    @node_modules_cache.store
   end
 
   def config_detect
@@ -963,8 +965,6 @@ params = CGI.parse(uri.query || "")
       precompile.invoke(env: rake_env)
       if precompile.success?
         puts "Asset precompilation completed (#{"%.2f" % precompile.time}s)"
-        @webpacks_cache.store
-        @node_modules_cache.store
       else
         precompile_fail(precompile.output)
       end
